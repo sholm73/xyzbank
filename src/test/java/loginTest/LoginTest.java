@@ -6,8 +6,16 @@ import org.junit.Test;
 public class LoginTest extends BaseTest{
 
     @Test
-    public void loginAsCustomerLogin(){
-        loginPage.loginWithCustomerCredential()
-        ;
+    public void signInWithCustomerUser(){
+        loginPage.openLoginPage();
+        loginPage.clickCustomerLoginButton();
+        customerPage.chooseCustomerName();
     }
+
+    @Test
+    public void signInWithBankManagerLogin(){
+        loginPage.openLoginPage();
+
+    }
+
 }

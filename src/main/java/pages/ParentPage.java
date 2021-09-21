@@ -37,11 +37,11 @@ public abstract class ParentPage {
         }
     }
 
-    protected void clickOnElement(WebElement webElement, String elementName) {
+    protected void clickOnElement(WebElement webElement) {
         try {
             webDriverWait10.until(ExpectedConditions.elementToBeClickable(webElement));
             webElement.click();
-            logger.info(elementName + " Element was clicked");
+            logger.info("Element was clicked");
         } catch (Exception e) {
             writeErrorAndStopTest(e);
         }
@@ -51,25 +51,41 @@ public abstract class ParentPage {
         try {
             Select select = new Select(dropDown);
             select.selectByValue(value);
-            logger.info("'" + value + "' was select in DropDown " + getElementName(dropDown));
+            logger.info("'" + value + "' was select in DropDown");
         } catch (Exception e) {
             writeErrorAndStopTest(e);
         }
     }
 
-    private String getElementName(WebElement webElement) {
-        String elementName = "";
-        if (webElement instanceof TypifiedElement) {
-            elementName = " '" + ((TypifiedElement) webElement).getName() + "' ";
+    protected void selectTextInDropDown(WebElement dropDown, String text) {
+        try {
+            webDriverWait10.until(ExpectedConditions.elementToBeClickable(dropDown));
+            Select select = new Select(dropDown);
+            select.selectByVisibleText(text);
+            logger.info("'" + text + "' was selected in DropDown");
+        } catch (Exception e) {
+            writeErrorAndStopTest(e);
         }
-        return elementName;
     }
 
     private void writeErrorAndStopTest(Exception e) {
-        logger.error("Can`t work with element " + e);
-        Assert.fail("Can`t work with element " + e);
+        logger.error("Can`t work with element: " + e);
+        Assert.fail("Can`t work with element: " + e);
     }
 
-
+    protected boolean isElementPresent(WebElement webElement) {
+        try {
+            boolean state = webElement.isDisplayed();
+            if (state) {
+                logger.info("Element is present");
+            } else {
+                logger.info("Element is not present");
+            }
+            return state;
+        } catch (Exception e) {
+            logger.info("Element is not present");
+            return false;
+        }
+    }
 
 }

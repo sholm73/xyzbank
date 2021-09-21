@@ -6,30 +6,33 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends ParentPage {
-
-    @FindBy(xpath = ".//button[text() = 'Customer Login']")
+    @FindBy(xpath = ".//button[text()='Customer Login']")
     private WebElement buttonCustomerLogin;
 
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    public LoginPage loginWithCustomerCredential() {
-        openLoginPage();
-        clickOnElement(buttonCustomerLogin, "Customer Login");
-        return this;
-    }
-
-    private LoginPage openLoginPage() {
+    public void openLoginPage() {
         try {
-            webDriver.get(baseURL + "login");
-            //logger.info("Login page was opened");
+            webDriver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
+            logger.info("Login page was opened");
         } catch (Exception e) {
-            //logger.error("Can not work with LoginPage " + e);
-            Assert.fail("Can not work with LoginPage");
+            logger.error("Can not work with Login Page: " + e);
+            Assert.fail("Can not work with Login Page: " + e);
         }
-        return this;
     }
 
+    public void clickCustomerLoginButton() {
+        try {
+//            WebElement element = webDriver.findElement(By.xpath(".//button[text()='Customer Login']"));
+            buttonCustomerLogin.click();
+            logger.info("The Customer selection page is open!");
+        } catch (Exception e) {
+            logger.error("The customer selection page is not open!");
+            Assert.fail("The customer selection page is not open!");
+        }
+
+    }
 
 }

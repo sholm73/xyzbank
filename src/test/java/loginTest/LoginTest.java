@@ -7,9 +7,14 @@ public class LoginTest extends BaseTest{
 
     @Test
     public void signInWithCustomerUser(){
-        loginPage.openLoginPage();
-        loginPage.clickCustomerLoginButton();
-        customerPage.chooseCustomerName();
+        loginPage.openLoginPage()
+                .clickCustomerLoginButton()
+                .checkIsLabelCustomerNameVisible()
+                .selectUserNameInDropDown()
+                .clickOnLoginButton()
+        //loginPage.clickCustomerLoginButton();
+        //customerPage.chooseCustomerName()
+         ;
     }
 
     @Test

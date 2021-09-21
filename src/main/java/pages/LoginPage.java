@@ -13,7 +13,7 @@ public class LoginPage extends ParentPage {
         super(webDriver);
     }
 
-    public void openLoginPage() {
+    public LoginPage openLoginPage() {
         try {
             webDriver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
             logger.info("Login page was opened");
@@ -21,18 +21,18 @@ public class LoginPage extends ParentPage {
             logger.error("Can not work with Login Page: " + e);
             Assert.fail("Can not work with Login Page: " + e);
         }
+        return this;
     }
 
-    public void clickCustomerLoginButton() {
+    public CustomerPage clickCustomerLoginButton() {
         try {
-//            WebElement element = webDriver.findElement(By.xpath(".//button[text()='Customer Login']"));
             buttonCustomerLogin.click();
             logger.info("The Customer selection page is open!");
         } catch (Exception e) {
             logger.error("The customer selection page is not open!");
             Assert.fail("The customer selection page is not open!");
         }
-
+        return new CustomerPage(webDriver);
     }
 
 }

@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.htmlelements.element.TypifiedElement;
 
 public abstract class ParentPage {
     Logger logger = Logger.getLogger(getClass());
@@ -68,7 +67,7 @@ public abstract class ParentPage {
         }
     }
 
-    private void writeErrorAndStopTest(Exception e) {
+    public void writeErrorAndStopTest(Exception e) {
         logger.error("Can`t work with element: " + e);
         Assert.fail("Can`t work with element: " + e);
     }

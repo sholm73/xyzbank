@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,7 @@ public class CustomerPage extends ParentPage{
         super(webDriver);
     }
 
+    @Step
     public CustomerPage checkIsLabelCustomerNameVisible() {
         Assert.assertTrue("Label Your Name is not displayed", isLabelCustomerNamePresent());
         return this;
@@ -28,13 +30,17 @@ public class CustomerPage extends ParentPage{
         return isElementPresent(customerLabel);
     }
 
-    public CustomerPage selectUserNameInDropDown() {
-        selectTextInDropDown(customerNameDropDown, "Albus Dumbledore");
+    @Step
+    public CustomerPage selectCustomerNameInDropDown(String customerName) {
+        selectTextInDropDown(customerNameDropDown, customerName);
         return this;
     }
 
+    @Step
     public AccountPage clickOnLoginButton() {
         clickOnElement(loginButton);
         return new AccountPage(webDriver);
     }
+
+
 }

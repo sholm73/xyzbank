@@ -1,16 +1,17 @@
 package loginTest;
 
 import baseTest.BaseTest;
+import libs.TestData;
 import org.junit.Test;
 
 public class LoginTest extends BaseTest{
-   private final String CUSTOMER_NAME = "Hermoine Granger";
+   private final String CUSTOMER_NAME = TestData.CUSTOMER_FIRST_NAME + " " +  TestData.CUSTOMER_SECOND_NAME;
 
     @Test
     public void signInWithCustomerUser(){
         loginPage.openLoginPage()
                 .clickCustomerLoginButton()
-                .checkIsLabelCustomerNameVisible()
+                .checkLabelYourNameVisible()
                 .selectCustomerNameInDropDown(CUSTOMER_NAME)
                 .clickOnLoginButton()
                 .checkIsWelcomeTitlePresent(CUSTOMER_NAME);
@@ -19,8 +20,10 @@ public class LoginTest extends BaseTest{
     @Test
     public void signInWithBankManagerLogin(){
         loginPage.openLoginPage()
-                .clickBankManagerLoginButton();
-
+                .clickBankManagerLoginButton()
+                .clickCustomerButton()
+                .checkingPresenceTheCustomerSearchInputElement();
     }
+
 
 }

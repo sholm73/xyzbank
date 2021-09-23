@@ -21,7 +21,7 @@ public class CustomerPage extends ParentPage{
     }
 
     @Step
-    public CustomerPage checkIsLabelCustomerNameVisible() {
+    public CustomerPage checkLabelYourNameVisible() {
         Assert.assertTrue("Label Your Name is not displayed", isLabelCustomerNamePresent());
         return this;
     }

@@ -41,6 +41,7 @@ public class LoginPage extends ParentPage {
         return new CustomerPage(webDriver);
     }
 
+    @Step
     public ManagerPage clickBankManagerLoginButton() {
         try {
             buttonBankManagerLogin.click();

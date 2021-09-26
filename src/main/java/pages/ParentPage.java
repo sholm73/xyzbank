@@ -28,10 +28,11 @@ public abstract class ParentPage {
 
     protected void enterTextToElement(WebElement webElement, String text) {
         try {
+            webDriverWait10.until(ExpectedConditions.elementToBeClickable(webElement));
             webElement.clear();
             webElement.sendKeys(text);
-            logger.info("'" + "' was inputted was element");
-        } catch (Exception e){
+            logger.info("'" + text + "' was inputted in element");
+        } catch (Exception e) {
             writeErrorAndStopTest(e);
         }
     }
@@ -48,6 +49,7 @@ public abstract class ParentPage {
 
     protected void selectValueInDropDown(WebElement dropDown, String value) {
         try {
+            webDriverWait10.until(ExpectedConditions.elementToBeClickable(dropDown));
             Select select = new Select(dropDown);
             select.selectByValue(value);
             logger.info("'" + value + "' was select in DropDown");
@@ -74,6 +76,7 @@ public abstract class ParentPage {
 
     protected boolean isElementPresent(WebElement webElement) {
         try {
+            webDriverWait10.until(ExpectedConditions.elementToBeClickable(webElement));
             boolean state = webElement.isDisplayed();
             if (state) {
                 logger.info("Element is present");

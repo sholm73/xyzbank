@@ -3,10 +3,8 @@ package customerTest;
 import baseTest.BaseTest;
 import libs.TestData;
 import org.junit.Test;
-import pages.LoginPage;
 
 public class CustomerTest extends BaseTest {
-    private final String CUSTOMER_NAME = TestData.CUSTOMER_FIRST_NAME + " " +  TestData.CUSTOMER_SECOND_NAME;
 
     @Test
     public void customerSearchInList(){
@@ -14,8 +12,20 @@ public class CustomerTest extends BaseTest {
                 .clickBankManagerLoginButton()
                 .clickCustomerButton()
                 .checkingPresenceTheCustomerSearchInputElement()
-                .enterTextIntoSearchCustomerInputElement(CUSTOMER_NAME)
-                .checkingPresenceCustomerInGreed()
+                .enterTextIntoSearchCustomerInputElement(TestData.CUSTOMER_FIRST_NAME)
+                .checkingPresenceCustomerInGreed(TestData.CUSTOMER_FIRST_NAME, TestData.CUSTOMER_SECOND_NAME);
+    }
+
+    @Test
+    public void addNewCustomer(){
+        loginPage.openLoginPage()
+                .clickBankManagerLoginButton()
+                .clickOnAddCustomerButton()
+                .checkVisibleAddCustomerButton()
+                .enterTextIntoTextForCreateNewCustomer(TestData.NEW_CUSTOMER_FIRST_NAME,
+                                                       TestData.NEW_CUSTOMER_SECOND_NAME,
+                                                       TestData.NEW_CUSTOMER_POST_CODE)
+                .clickOnButtonAddCustomerForAddedData()
                 ;
     }
 }

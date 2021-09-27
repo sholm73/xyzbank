@@ -2,6 +2,7 @@ package pages;
 
 import io.qameta.allure.Step;
 import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,8 +16,12 @@ public class ManagerPage extends ParentPage {
     private WebElement firstName;
     @FindBy(xpath = ".//tr[@class='ng-scope']/td[2]")
     private WebElement secondName;
+    @FindBy(xpath = ".//tr[@class='ng-scope']/td[3]")
+    private WebElement postCode;
+    @FindBy(xpath = ".//tr[@class='ng-scope']/td[4]")
+    private WebElement customerDeleteButton;
     @FindBy(xpath = ".//button[@ng-click='addCust()']")
-    private WebElement addCustomerButton;
+    private WebElement addCustomerMenuButton;
     @FindBy(xpath = ".//input[@placeholder='First Name']")
     private WebElement customerFirstName;
     @FindBy(xpath = ".//input[@placeholder='Last Name']")
@@ -24,14 +29,14 @@ public class ManagerPage extends ParentPage {
     @FindBy(xpath = ".//input[@placeholder='Post Code']")
     private WebElement customerPostCode;
     @FindBy(xpath = ".//button[@type='submit']")
-    private WebElement buttonAddedNewData;
+    private WebElement buttonAddNewCustomer;
 
     public ManagerPage(WebDriver webDriver) {
         super(webDriver);
     }
 
     @Step
-    public ManagerPage clickCustomerButton() {
+    public ManagerPage clickCustomersMenuButton() {
         clickOnElement(customerButton);
         return this;
     }
@@ -58,8 +63,8 @@ public class ManagerPage extends ParentPage {
         try {
             Assert.assertEquals("The Customer is not present in the client list", firstName.getText(), customerFirstName);
             Assert.assertEquals("The Customer is not present in the client list", secondName.getText(), customerSecondName);
-            logger.info(String.format("Customer '%s %s' found in the customer list",  customerFirstName, customerSecondName));
-        } catch (Exception e){
+            logger.info(String.format("Customer '%s %s' found in the customer list", customerFirstName, customerSecondName));
+        } catch (Exception e) {
             writeErrorAndStopTest(e);
         }
         return this;
@@ -67,17 +72,17 @@ public class ManagerPage extends ParentPage {
 
     public ManagerPage checkVisibleAddCustomerButton() {
         try {
-            Assert.assertTrue("A client button is not present", isElementPresent(addCustomerButton));
+            Assert.assertTrue("A client button is not present", isElementPresent(addCustomerMenuButton));
             logger.info("Is present a client button");
-        } catch (Exception e){
+        } catch (Exception e) {
             writeErrorAndStopTest(e);
         }
 
         return this;
     }
 
-    public ManagerPage clickOnAddCustomerButton() {
-        clickOnElement(addCustomerButton);
+    public ManagerPage clickOnAddCustomerMenuButton() {
+        clickOnElement(addCustomerMenuButton);
         return this;
     }
 
@@ -91,7 +96,37 @@ public class ManagerPage extends ParentPage {
     }
 
     public ManagerPage clickOnButtonAddCustomerForAddedData() {
-        clickOnElement(buttonAddedNewData);
+        clickOnElement(buttonAddNewCustomer);
+        if (webDriver.switchTo().alert() != null) {
+            Alert alert = webDriver.switchTo().alert();
+            alert.dismiss();
+        }
+        return this;
+    }
+
+    public ManagerPage checkNewCustomerInCustomersList(String newCustomerFirstName,
+                                                       String newCustomerSecondName,
+                                                       String newCustomerPostCode) {
+        try {
+            Assert.assertEquals("The Customer is not present in the client list", firstName.getText(), newCustomerFirstName);
+            Assert.assertEquals("The Customer is not present in the client list", secondName.getText(), newCustomerSecondName);
+            Assert.assertEquals("The Customer is not present in the client list", postCode.getText(), newCustomerPostCode);
+            logger.info(String.format("Customer '%s %s' with post code %s found in the customer list",
+                    secondName.getText(), firstName.getText(), postCode.getText()));
+        } catch (Exception e) {
+            writeErrorAndStopTest(e);
+        }
+        return this;
+    }
+
+    public ManagerPage deleteNewCustomer() {
+        try {
+            clickOnElement(customerDeleteButton);
+            logger.info(String.format("Customer '%s %s' successfully deleted",
+                    secondName.getText(), firstName.getText()));
+        } catch (Exception e){
+            writeErrorAndStopTest(e);
+        }
         return this;
     }
 }

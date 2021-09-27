@@ -21,7 +21,7 @@ public class LoginTest extends BaseTest{
     public void signInWithBankManagerLogin(){
         loginPage.openLoginPage()
                 .clickBankManagerLoginButton()
-                .clickCustomerButton()
+                .clickCustomersMenuButton()
                 .checkingPresenceTheCustomerSearchInputElement();
     }
 
